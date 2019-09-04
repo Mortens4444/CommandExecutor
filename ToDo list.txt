@@ -1,0 +1,6 @@
+- Fix mouse scrool.
+- Show ballon tooltips of the server.
+
+- Check double-click messages. // Why 3?
+- // FIXME: mouseMoveArgs = 289getscre
+- Support special keys.
