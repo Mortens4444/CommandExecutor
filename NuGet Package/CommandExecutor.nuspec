@@ -2,16 +2,16 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
     <id>Mtf.CommandExecutor</id>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <title>Command Executor &amp; Command Sender</title>
     <authors>Mortens</authors>
     <owners>Mortens</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MIT</license>
     <projectUrl>http://w3.hdsnet.hu/mortens/</projectUrl>
-    <repository type="git" url="https://github.com/Mortens4444/CommandExecutor.git" branch="master" commit="13112599cdd22d8ee728d67c93f6c86e53feee3f" />
+    <repository type="git" url="https://github.com/Mortens4444/CommandExecutor.git" branch="master" commit="13d5e734f945152a014f244f4b4f5d15e6bf2cf6" />
     <description>A minimal VNC server and client application.</description>
-    <releaseNotes>Initial version of the application.</releaseNotes>
+    <releaseNotes>Add translation and command line parameter.</releaseNotes>
     <copyright>Copyright © 2020</copyright>
     <tags>VNC client server command executor sender</tags>
     <dependencies>
