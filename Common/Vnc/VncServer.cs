@@ -186,7 +186,7 @@ namespace Common.Vnc
 					{
 						var scroolValue = Convert.ToInt32(value);
 						// scroolValue < 0 => scrools down
-						WinAPI.mouse_event(WinAPI.MOUSEEVENTF_WHEEL, 0, 0, scroolValue, 0);
+						WinAPI.MouseEvent(WinAPI.MOUSEEVENTF_WHEEL, 0, 0, scroolValue, 0);
 					}
 				}
 				else

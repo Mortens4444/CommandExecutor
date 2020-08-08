@@ -19,14 +19,14 @@ namespace Common.Mouse
 				var clickFlags = ClickFlagsProvider.Get(clickButton, 2);
 				for (int i = 0; i < 3; i++) // Why 3?
 				{
-					WinAPI.mouse_event(clickFlags, location.X, location.Y, 0, 0);
+					WinAPI.MouseEvent(clickFlags, location.X, location.Y, 0, 0);
 					Thread.Sleep(50);
 				}
 			}
 			else
 			{
 				var clickFlags = ClickFlagsProvider.Get(clickButton, clickType);
-				WinAPI.mouse_event(clickFlags, location.X, location.Y, 0, 0);
+				WinAPI.MouseEvent(clickFlags, location.X, location.Y, 0, 0);
 			}
 		}
 

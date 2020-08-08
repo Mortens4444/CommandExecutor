@@ -9,11 +9,13 @@ namespace CommandSender
 		/// The main entry point for the application.
 		/// </summary>
 		[STAThread]
-		static void Main()
+		static void Main(string[] args)
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new MainForm());
+
+			var  mainForm = args.Length == 1 ? new MainForm(args[0]) : new MainForm();
+			Application.Run(mainForm);
 		}
 	}
 }

@@ -115,7 +115,7 @@
 			this.btn_MouseControl.Name = "btn_MouseControl";
 			this.btn_MouseControl.Size = new System.Drawing.Size(23, 23);
 			this.btn_MouseControl.TabIndex = 21;
-			this.toolTip.SetToolTip(this.btn_MouseControl, "Mouse control");
+			this.toolTip.SetToolTip(this.btn_MouseControl, LanguageService.Lng.Elem("Mouse control"));
 			this.btn_MouseControl.UseVisualStyleBackColor = true;
 			this.btn_MouseControl.Click += new System.EventHandler(this.Btn_MouseControl_Click);
 			// 
@@ -137,7 +137,7 @@
 			this.btn_KillApplication.Name = "btn_KillApplication";
 			this.btn_KillApplication.Size = new System.Drawing.Size(23, 23);
 			this.btn_KillApplication.TabIndex = 19;
-			this.toolTip.SetToolTip(this.btn_KillApplication, "Kill application");
+			this.toolTip.SetToolTip(this.btn_KillApplication, LanguageService.Lng.Elem("Kill application"));
 			this.btn_KillApplication.UseVisualStyleBackColor = true;
 			this.btn_KillApplication.Click += new System.EventHandler(this.Btn_KillApplication_Click);
 			// 
@@ -159,7 +159,7 @@
 			this.btn_VisitLink.Name = "btn_VisitLink";
 			this.btn_VisitLink.Size = new System.Drawing.Size(23, 23);
 			this.btn_VisitLink.TabIndex = 17;
-			this.toolTip.SetToolTip(this.btn_VisitLink, "Visit link");
+			this.toolTip.SetToolTip(this.btn_VisitLink, LanguageService.Lng.Elem("Visit link"));
 			this.btn_VisitLink.UseVisualStyleBackColor = true;
 			this.btn_VisitLink.Click += new System.EventHandler(this.Btn_VisitLink_Click);
 			// 
@@ -170,7 +170,7 @@
 			this.btn_TaskMgr.Name = "btn_TaskMgr";
 			this.btn_TaskMgr.Size = new System.Drawing.Size(23, 23);
 			this.btn_TaskMgr.TabIndex = 15;
-			this.toolTip.SetToolTip(this.btn_TaskMgr, "Task manager");
+			this.toolTip.SetToolTip(this.btn_TaskMgr, LanguageService.Lng.Elem("Task manager"));
 			this.btn_TaskMgr.UseVisualStyleBackColor = true;
 			this.btn_TaskMgr.Click += new System.EventHandler(this.Btn_TaskMgr_Click);
 			// 
@@ -182,7 +182,7 @@
 			this.btn_Restart.Name = "btn_Restart";
 			this.btn_Restart.Size = new System.Drawing.Size(23, 23);
 			this.btn_Restart.TabIndex = 14;
-			this.toolTip.SetToolTip(this.btn_Restart, "Restart");
+			this.toolTip.SetToolTip(this.btn_Restart, LanguageService.Lng.Elem("Restart"));
 			this.btn_Restart.UseVisualStyleBackColor = true;
 			this.btn_Restart.Click += new System.EventHandler(this.Btn_Restart_Click);
 			// 
@@ -193,7 +193,7 @@
 			this.btn_Notepad.Name = "btn_Notepad";
 			this.btn_Notepad.Size = new System.Drawing.Size(23, 23);
 			this.btn_Notepad.TabIndex = 13;
-			this.toolTip.SetToolTip(this.btn_Notepad, "Notepad");
+			this.toolTip.SetToolTip(this.btn_Notepad, LanguageService.Lng.Elem("Notepad"));
 			this.btn_Notepad.UseVisualStyleBackColor = true;
 			this.btn_Notepad.Click += new System.EventHandler(this.Btn_Notepad_Click);
 			// 
@@ -204,7 +204,7 @@
 			this.btn_Paint.Name = "btn_Paint";
 			this.btn_Paint.Size = new System.Drawing.Size(23, 23);
 			this.btn_Paint.TabIndex = 12;
-			this.toolTip.SetToolTip(this.btn_Paint, "Paint");
+			this.toolTip.SetToolTip(this.btn_Paint, LanguageService.Lng.Elem("Paint"));
 			this.btn_Paint.UseVisualStyleBackColor = true;
 			this.btn_Paint.Click += new System.EventHandler(this.Btn_Paint_Click);
 			// 
@@ -215,7 +215,7 @@
 			this.btn_Calc.Name = "btn_Calc";
 			this.btn_Calc.Size = new System.Drawing.Size(23, 23);
 			this.btn_Calc.TabIndex = 11;
-			this.toolTip.SetToolTip(this.btn_Calc, "Calculator");
+			this.toolTip.SetToolTip(this.btn_Calc, LanguageService.Lng.Elem("Calculator"));
 			this.btn_Calc.UseVisualStyleBackColor = true;
 			this.btn_Calc.Click += new System.EventHandler(this.Btn_Calc_Click);
 			// 
@@ -226,7 +226,7 @@
 			this.btn_Regedit.Name = "btn_Regedit";
 			this.btn_Regedit.Size = new System.Drawing.Size(23, 23);
 			this.btn_Regedit.TabIndex = 10;
-			this.toolTip.SetToolTip(this.btn_Regedit, "Regedit");
+			this.toolTip.SetToolTip(this.btn_Regedit, LanguageService.Lng.Elem("Regedit"));
 			this.btn_Regedit.UseVisualStyleBackColor = true;
 			this.btn_Regedit.Click += new System.EventHandler(this.Btn_Regedit_Click);
 			// 
@@ -237,7 +237,7 @@
 			this.btn_CommandPrompt.Name = "btn_CommandPrompt";
 			this.btn_CommandPrompt.Size = new System.Drawing.Size(23, 23);
 			this.btn_CommandPrompt.TabIndex = 9;
-			this.toolTip.SetToolTip(this.btn_CommandPrompt, "Command prompt");
+			this.toolTip.SetToolTip(this.btn_CommandPrompt, LanguageService.Lng.Elem("Command prompt"));
 			this.btn_CommandPrompt.UseVisualStyleBackColor = true;
 			this.btn_CommandPrompt.Click += new System.EventHandler(this.Btn_CommandPrompt_Click);
 			// 
@@ -249,7 +249,7 @@
 			this.btn_ShutdownAbort.Name = "btn_ShutdownAbort";
 			this.btn_ShutdownAbort.Size = new System.Drawing.Size(23, 23);
 			this.btn_ShutdownAbort.TabIndex = 8;
-			this.toolTip.SetToolTip(this.btn_ShutdownAbort, "Shutdown abort");
+			this.toolTip.SetToolTip(this.btn_ShutdownAbort, LanguageService.Lng.Elem("Shutdown abort"));
 			this.btn_ShutdownAbort.UseVisualStyleBackColor = true;
 			this.btn_ShutdownAbort.Click += new System.EventHandler(this.Btn_ShutdownAbort_Click);
 			// 
@@ -261,7 +261,7 @@
 			this.btn_Shutdown.Name = "btn_Shutdown";
 			this.btn_Shutdown.Size = new System.Drawing.Size(23, 23);
 			this.btn_Shutdown.TabIndex = 7;
-			this.toolTip.SetToolTip(this.btn_Shutdown, "Shutdown");
+			this.toolTip.SetToolTip(this.btn_Shutdown, LanguageService.Lng.Elem("Shutdown"));
 			this.btn_Shutdown.UseVisualStyleBackColor = true;
 			this.btn_Shutdown.Click += new System.EventHandler(this.Btn_Shutdown_Click);
 			// 
@@ -280,9 +280,9 @@
 			// 
 			this.tb_VideoFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.tb_VideoFile.Location = new System.Drawing.Point(82, 73);
+			this.tb_VideoFile.Location = new System.Drawing.Point(90, 73);
 			this.tb_VideoFile.Name = "tb_VideoFile";
-			this.tb_VideoFile.Size = new System.Drawing.Size(287, 20);
+			this.tb_VideoFile.Size = new System.Drawing.Size(279, 20);
 			this.tb_VideoFile.TabIndex = 5;
 			// 
 			// lbl_StartVideo
@@ -308,9 +308,9 @@
 			this.cb_Computer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.cb_Computer.FormattingEnabled = true;
-			this.cb_Computer.Location = new System.Drawing.Point(82, 17);
+			this.cb_Computer.Location = new System.Drawing.Point(90, 17);
 			this.cb_Computer.Name = "cb_Computer";
-			this.cb_Computer.Size = new System.Drawing.Size(375, 21);
+			this.cb_Computer.Size = new System.Drawing.Size(367, 21);
 			this.cb_Computer.TabIndex = 2;
 			// 
 			// btn_Send
@@ -328,9 +328,9 @@
 			// 
 			this.tb_Command.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.tb_Command.Location = new System.Drawing.Point(82, 44);
+			this.tb_Command.Location = new System.Drawing.Point(90, 44);
 			this.tb_Command.Name = "tb_Command";
-			this.tb_Command.Size = new System.Drawing.Size(287, 20);
+			this.tb_Command.Size = new System.Drawing.Size(279, 20);
 			this.tb_Command.TabIndex = 0;
 			// 
 			// MainForm

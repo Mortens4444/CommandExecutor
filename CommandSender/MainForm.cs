@@ -3,6 +3,7 @@ using Common.Messages;
 using Common.Network;
 using Common.Processes;
 using Common.Vnc;
+using LanguageService.Windows.Forms;
 using System;
 using System.Windows.Forms;
 using static Common.Vnc.VncServer;
@@ -11,15 +12,28 @@ namespace CommandSender
 {
 	public partial class MainForm : Form
 	{
-		public MainForm()
+		private readonly string ipAddress;
+
+		public MainForm(string ipAddress = null)
 		{
 			InitializeComponent();
+			Translator.Translate(this);
+
+			this.ipAddress = ipAddress;
 		}
 
 		private void MainForm_Load(object sender, EventArgs e)
 		{
-			var processResultParser = new IpConfigResultParser(cb_Computer);
-			ProcessUtils.ExecuteCommand("ipconfig > tmpfile && grep 'IPv4 Address' tmpfile && rm tmpfile", processResultParser);
+			if (String.IsNullOrWhiteSpace(ipAddress))
+			{
+				var processResultParser = new IpConfigResultParser(cb_Computer);
+				ProcessUtils.ExecuteCommand("ipconfig > tmpfile && grep 'IPv4 Address' tmpfile && rm tmpfile", processResultParser);
+			}
+			else
+			{
+				cb_Computer.Items.Add(ipAddress);
+				cb_Computer.SelectedIndex = 0;
+			}
 		}
 
 		private void Send(string message, DataArrivedEventHandler vncClientDataArrived = null)

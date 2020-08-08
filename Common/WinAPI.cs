@@ -44,7 +44,7 @@ namespace Common
 		public static extern bool GetCursorPos(out POINT lpPoint);
 
 		[DllImport("User32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
-		public static extern void mouse_event(long dwFlags, long dx, long dy, long cButtons, long dwExtraInfo);
+		public static extern void MouseEvent(long dwFlags, long dx, long dy, long cButtons, long dwExtraInfo);
 
 		[DllImport("User32.dll")]
 		public static extern bool SetCursorPos(int x, int y);

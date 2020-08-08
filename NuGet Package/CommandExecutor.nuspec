@@ -9,7 +9,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MIT</license>
     <projectUrl>http://w3.hdsnet.hu/mortens/</projectUrl>
-    <repository type="git" url="https://github.com/Mortens4444/CommandExecutor.git" branch="master" commit="44457111805c9f5faadb8bf29fc5c12712d24e8d" />
+    <repository type="git" url="https://github.com/Mortens4444/CommandExecutor.git" branch="master" commit="13112599cdd22d8ee728d67c93f6c86e53feee3f" />
     <description>A minimal VNC server and client application.</description>
     <releaseNotes>Initial version of the application.</releaseNotes>
     <copyright>Copyright © 2020</copyright>
