@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>Mtf.CommandExecutor</id>
+    <version>1.0.0</version>
+    <title>Command Executor &amp; Command Sender</title>
+    <authors>Mortens</authors>
+    <owners>Mortens</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <projectUrl>http://w3.hdsnet.hu/mortens/</projectUrl>
+    <repository type="git" url="https://github.com/Mortens4444/CommandExecutor.git" branch="master" commit="44457111805c9f5faadb8bf29fc5c12712d24e8d" />
+    <description>A minimal VNC server and client application.</description>
+    <releaseNotes>Initial version of the application.</releaseNotes>
+    <copyright>Copyright © 2020</copyright>
+    <tags>VNC client server command executor sender</tags>
+    <dependencies>
+	  <group targetFramework=".NETFramework4.8" />
+    </dependencies>
+  </metadata>
+  <files>
+	<file src="D:\Work\CommandExecuter\NuGet Package\Binaries\**" target="lib\net48" />
+  </files>
+</package>
