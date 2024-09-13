@@ -40,9 +40,9 @@ namespace CommandSender
 		{
 			try
 			{
-				var vncClient = new VncClient(cb_Computer.Text, Constants.VNC_PORT);
-				vncClient.SetNewDataArriveEventHandler(vncClientDataArrived);
-				vncClient.Send(message);
+				var vncClient = new VncClient(cb_Computer.Text, (ushort)nudPort.Value);
+                vncClient.DataArrived += vncClientDataArrived;
+                vncClient.Send(message);
 			}
 			catch (Exception ex)
 			{

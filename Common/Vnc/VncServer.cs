@@ -1,5 +1,4 @@
 ﻿using Common.Extensions;
-using Common.Messages;
 using Common.Mouse;
 using Common.Network;
 using Common.Processes;
@@ -15,7 +14,7 @@ using System.Windows.Forms;
 
 namespace Common.Vnc
 {
-	public class VncServer : Socket
+    public class VncServer : Socket
 	{
 		public delegate void DataArrivedEventHandler(object sender, DataArrivedEventArgs e);
 		public delegate void ErrorOccurredEventHandler(object sender, ErrorOccurredEventArgs e);
@@ -32,11 +31,11 @@ namespace Common.Vnc
 			: base(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp)
 		{
 			working = true;
-			ListenerPortOfServer = listenerPort;
 			if (listenerPort == 0)
 			{
 				listenerPort = PortUtils.GetFreePort();
 			}
+			ListenerPortOfServer = listenerPort;
 
 			Bind(new IPEndPoint(IPAddress.Any, listenerPort));
 			Listen(Constants.MAX_PENDING_CONNECTION);
@@ -110,30 +109,26 @@ namespace Common.Vnc
 
 		private void ServerReadCallback(IAsyncResult ar)
 		{
-			Socket handler = null;
 			try
 			{
 				var state = (StateObject)ar.AsyncState;
-				handler = state.Socket;
-				if (handler.Connected)
+				using (var handler = state.Socket)
 				{
-					int read = handler.EndReceive(ar);
-					if (read > 0)
+					if (handler.Connected)
 					{
-						byte[] data = new byte[read];
-						Array.Copy(state.Buffer, 0, data, 0, read);
-						OnDataArrived(new DataArrivedEventArgs(handler, (IPEndPoint)handler.RemoteEndPoint, data));
-						handler.BeginReceive(state.Buffer, 0, state.Buffer.Length, SocketFlags.None, new AsyncCallback(ServerReadCallback), state);
+						int read = handler.EndReceive(ar);
+						if (read > 0)
+						{
+							byte[] data = new byte[read];
+							Array.Copy(state.Buffer, 0, data, 0, read);
+							OnDataArrived(new DataArrivedEventArgs(handler, (IPEndPoint)handler.RemoteEndPoint, data));
+							handler.BeginReceive(state.Buffer, 0, state.Buffer.Length, SocketFlags.None, new AsyncCallback(ServerReadCallback), state);
+						}
 					}
 				}
 			}
-			catch (InvalidOperationException ex)
-			{
-				OnErrorOccurred(ex);
-			}
 			catch (Exception ex)
 			{
-				SocketUtils.CloseSocket(handler);
 				OnErrorOccurred(ex);
 			}
 		}

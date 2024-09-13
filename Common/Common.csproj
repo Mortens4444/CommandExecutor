@@ -45,7 +45,6 @@
     <Compile Include="Mouse\MouseHandler.cs" />
     <Compile Include="Utils\PortUtils.cs" />
     <Compile Include="Network\MessageSender.cs" />
-    <Compile Include="Utils\SocketUtils.cs" />
     <Compile Include="Vnc\ErrorOccurredEventArgs.cs" />
     <Compile Include="Vnc\VncClient.cs" />
     <Compile Include="Constants.cs" />
