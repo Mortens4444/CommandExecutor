@@ -137,7 +137,7 @@ namespace CommandSender
 
 				cb_Computer.Invoke((MethodInvoker)delegate
 				{
-					var mcf = new MouseControlForm(cb_Computer.Text, width, height);
+					var mcf = new MouseControlForm(cb_Computer.Text, (ushort)nudPort.Value, width, height);
 					mcf.Show();
 				});
 			}

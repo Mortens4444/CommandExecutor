@@ -11,8 +11,7 @@ namespace Common.Mouse
 		public static void ProcessMessage(string clickControlMessage, int clickType)
 		{
 			var clickButton = clickControlMessage.Split(' ')[1];
-			var location = new POINT();
-			WinAPI.GetCursorPos(out location);
+			WinAPI.GetCursorPos(out POINT location);
 
 			if (clickType == 3)
 			{
@@ -56,7 +55,7 @@ namespace Common.Mouse
 							ErrorBox.ShowLastWin32Error("MouseHandler.ProcessMessage");
 						}
 					}
-					catch (Exception ex)
+					catch //(Exception ex)
 					{
 						// FIXME: mouseMoveArgs = 289getscre
 						//ErrorBox.Show("Mouse control error", $"Unable to parse message: {mouseControlMessage}. Exception: {ex}");

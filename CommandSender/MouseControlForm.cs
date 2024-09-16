@@ -22,11 +22,11 @@ namespace CommandSender
 		private int expectedImageSize;
 		private byte[] rawImageData;
 
-		public MouseControlForm(string ipOrHostname, int width, int height)
+		public MouseControlForm(string ipOrHostname, ushort port, int width, int height)
 		{
 			InitializeComponent();
 			DoubleBuffered = true;
-			vncClient = new VncClient(ipOrHostname, Constants.VNC_PORT)
+			vncClient = new VncClient(ipOrHostname, port)
 			{
 				ReceiveBufferSize = Constants.IMAGE_SIZE,
 				ReceiveTimeout = 1000
@@ -56,10 +56,10 @@ namespace CommandSender
 			var newData = rawImageData == null || rawImageData.Length == 0;
 			var vncClient = (VncClient)sender;
 			rawImageData = newData ? e.Response : rawImageData.AppendArrays(e.Response);
-			var begining = vncClient.Encoding.GetString(rawImageData.Take(21).ToArray());
-			if (begining.StartsWith(VncCommand.ImageSize))
+			var beginning = vncClient.Encoding.GetString(rawImageData.Take(21).ToArray());
+			if (beginning.StartsWith(VncCommand.ImageSize))
 			{
-				var data = begining.Split(VncCommand.Separator);
+				var data = beginning.Split(VncCommand.Separator);
 				expectedImageSize = Convert.ToInt32(data[1]);
 				rawImageData = rawImageData.Skip(VncCommand.ImageSize.Length + 2 + data[1].Length).ToArray();
 			}

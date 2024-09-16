@@ -6,14 +6,14 @@ namespace Common
 {
 	public static class PortUtils
 	{
-		private static Random random = new Random(Environment.TickCount);
+		private static readonly Random random = new Random(Environment.TickCount);
 
 		public static int GetFreePort()
-		{			
+		{
 			int port;
 			do
 			{
-				port = random.Next(1024, UInt16.MaxValue);
+                port = random.Next(1024, UInt16.MaxValue);
 			}
 			while (!IsPortAvailable(port));
 			return port;
