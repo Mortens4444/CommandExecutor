@@ -41,8 +41,8 @@ namespace CommandSender
 			try
 			{
 				var vncClient = new VncClient(cb_Computer.Text, (ushort)nudPort.Value);
-                vncClient.DataArrived += vncClientDataArrived;
-                vncClient.Send(message);
+				vncClient.DataArrived += vncClientDataArrived;
+				vncClient.Send(message);
 			}
 			catch (Exception ex)
 			{

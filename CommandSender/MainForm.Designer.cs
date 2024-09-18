@@ -336,7 +336,7 @@
             this.nudPort.Size = new System.Drawing.Size(80, 20);
             this.nudPort.TabIndex = 23;
             this.nudPort.Value = new decimal(new int[] {
-            1000,
+            10000,
             0,
             0,
             0});

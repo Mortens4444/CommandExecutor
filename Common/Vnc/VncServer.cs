@@ -112,18 +112,16 @@ namespace Common.Vnc
 			try
 			{
 				var state = (StateObject)ar.AsyncState;
-				using (var handler = state.Socket)
+				var handler = state.Socket;
+				if (handler.Connected)
 				{
-					if (handler.Connected)
+					int read = handler.EndReceive(ar);
+					if (read > 0)
 					{
-						int read = handler.EndReceive(ar);
-						if (read > 0)
-						{
-							byte[] data = new byte[read];
-							Array.Copy(state.Buffer, 0, data, 0, read);
-							OnDataArrived(new DataArrivedEventArgs(handler, (IPEndPoint)handler.RemoteEndPoint, data));
-							handler.BeginReceive(state.Buffer, 0, state.Buffer.Length, SocketFlags.None, new AsyncCallback(ServerReadCallback), state);
-						}
+						byte[] data = new byte[read];
+						Array.Copy(state.Buffer, 0, data, 0, read);
+						OnDataArrived(new DataArrivedEventArgs(handler, (IPEndPoint)handler.RemoteEndPoint, data));
+						handler.BeginReceive(state.Buffer, 0, state.Buffer.Length, SocketFlags.None, new AsyncCallback(ServerReadCallback), state);
 					}
 				}
 			}
