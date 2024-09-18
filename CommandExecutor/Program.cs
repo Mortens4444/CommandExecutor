@@ -2,6 +2,8 @@
 using Common.Messages;
 using Common.Vnc;
 using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CommandExecutor
@@ -27,8 +29,12 @@ namespace CommandExecutor
 			}
 		}
 
-		private static void VncServer_ErrorOccurred(object sender, ErrorOccurredEventArgs e)
+		private static async Task VncServer_ErrorOccurred(object sender, ErrorOccurredEventArgs e)
 		{
+			await Task.Run(() =>
+			{
+				Debug.WriteLine(e.Exception);
+			});
 			//ErrorBox.Show("VncServer_ErrorOccurred", e.Exception);
 		}
 	}

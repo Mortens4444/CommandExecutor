@@ -1,16 +1,16 @@
-﻿using Common;
-using Common.Messages;
+﻿using Common.Messages;
 using Common.Network;
 using Common.Processes;
 using Common.Vnc;
 using LanguageService.Windows.Forms;
 using System;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using static Common.Vnc.VncServer;
 
 namespace CommandSender
 {
-	public partial class MainForm : Form
+    public partial class MainForm : Form
 	{
 		private readonly string ipAddress;
 
@@ -35,100 +35,103 @@ namespace CommandSender
 				cb_Computer.SelectedIndex = 0;
 			}
 		}
-
-		private void Send(string message, DataArrivedEventHandler vncClientDataArrived = null)
+        
+		private async Task SendAsync(string message, DataArrivedEventHandler vncClientDataArrived = null)
 		{
 			try
 			{
 				var vncClient = new VncClient(cb_Computer.Text, (ushort)nudPort.Value);
 				vncClient.DataArrived += vncClientDataArrived;
-				vncClient.Send(message);
+				await vncClient.SendAsync(message);
 			}
 			catch (Exception ex)
 			{
-				ErrorBox.Show("MainForm.Send", ex);
+                Invoke((MethodInvoker)delegate
+                {
+					ErrorBox.Show("MainForm.Send", ex);
+                });
 			}
 		}
 
-		private void SendAndSetCommand(string message, string processName = null)
+		private async Task SendAndSetCommandAsync(string message, string processName = null)
 		{
-			Send(message);
+            await SendAsync(message);
 			tb_Application.Text = processName ?? message;
 		}
 
-		private void Btn_Send_Click(object sender, EventArgs e)
+		private async void Btn_Send_Click(object sender, EventArgs e)
 		{
-			Send(tb_Command.Text);
+            await SendAsync(tb_Command.Text);
 		}
 
-		private void Btn_Shutdown_Click(object sender, EventArgs e)
+		private async void Btn_Shutdown_Click(object sender, EventArgs e)
 		{
-			Send("shutdown /c \"Save your work, the computer will shut down.\" /s");
+			await SendAsync("shutdown /c \"Save your work, the computer will shut down.\" /s");
 		}
 
-		private void Btn_ShutdownAbort_Click(object sender, EventArgs e)
+		private async void Btn_ShutdownAbort_Click(object sender, EventArgs e)
 		{
-			Send("shutdown /a");
+            await SendAsync("shutdown /a");
 		}
 
-		private void Btn_Restart_Click(object sender, EventArgs e)
+		private async void Btn_Restart_Click(object sender, EventArgs e)
 		{
-			Send("shutdown /c \"Save your work, the computer will restart.\" /r");
+            await SendAsync("shutdown /c \"Save your work, the computer will restart.\" /r");
 		}
 
-		private void Btn_VisitLink_Click(object sender, EventArgs e)
+		private async void Btn_VisitLink_Click(object sender, EventArgs e)
 		{
-			Send($"cmd /c start \"{tb_Link.Text}\"");
+            await SendAsync($"cmd /c start \"{tb_Link.Text}\"");
 		}
 
-		private void Btn_Start_Click(object sender, EventArgs e)
+		private async void Btn_Start_Click(object sender, EventArgs e)
 		{
-			Send($"\"{tb_VideoFile.Text}\"");
+            await SendAsync($"\"{tb_VideoFile.Text}\"");
 		}
 
-		private void Btn_KillApplication_Click(object sender, EventArgs e)
+		private async void Btn_KillApplication_Click(object sender, EventArgs e)
 		{
-			Send($"killapp {tb_Application.Text}");
+            await SendAsync($"killapp {tb_Application.Text}");
 		}
 
-		private void Btn_CommandPrompt_Click(object sender, EventArgs e)
+		private async void Btn_CommandPrompt_Click(object sender, EventArgs e)
 		{
-			SendAndSetCommand("cmd");
+            await SendAndSetCommandAsync("cmd");
 		}
 
-		private void Btn_Regedit_Click(object sender, EventArgs e)
+		private async void Btn_Regedit_Click(object sender, EventArgs e)
 		{
-			SendAndSetCommand("regedit");
+            await SendAndSetCommandAsync("regedit");
 		}
 
-		private void Btn_Calc_Click(object sender, EventArgs e)
+		private async void Btn_Calc_Click(object sender, EventArgs e)
 		{
-			SendAndSetCommand("calc", "Calculator");
+            await SendAndSetCommandAsync("calc", "Calculator");
 		}
 
-		private void Btn_Paint_Click(object sender, EventArgs e)
+		private async void Btn_Paint_Click(object sender, EventArgs e)
 		{
-			SendAndSetCommand("mspaint");
+            await SendAndSetCommandAsync("mspaint");
 		}
 
-		private void Btn_Notepad_Click(object sender, EventArgs e)
+		private async void Btn_Notepad_Click(object sender, EventArgs e)
 		{
-			SendAndSetCommand("notepad");
+            await SendAndSetCommandAsync("notepad");
 		}
 
-		private void Btn_TaskMgr_Click(object sender, EventArgs e)
+		private async void Btn_TaskMgr_Click(object sender, EventArgs e)
 		{
-			SendAndSetCommand("taskmgr");
+            await SendAndSetCommandAsync("taskmgr");
 		}
 
-		private void Btn_MouseControl_Click(object sender, EventArgs e)
+		private async void Btn_MouseControl_Click(object sender, EventArgs e)
 		{
-			Send(VncCommand.SendScreenSize, VncClient_DataArrived);
+            await SendAsync(VncCommand.SendScreenSize, VncClient_DataArrived);
 		}
 
-		private void VncClient_DataArrived(object sender, DataArrivedEventArgs e)
+		private async Task VncClient_DataArrived(object sender, DataArrivedEventArgs e)
 		{
-			var message = VncClient.GetMessage(sender, e);
+			var message = await VncClient.GetMessageAsync(sender, e);
 			if (message.StartsWith(VncCommand.ScreenSize))
 			{
 				var data = message.Split(VncCommand.Separator, 'x');

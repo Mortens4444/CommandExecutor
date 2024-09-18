@@ -9,13 +9,12 @@ using System;
 using System.Drawing;
 using System.Linq;
 using System.Net.Sockets;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CommandSender
 {
-	public partial class MouseControlForm : Form
+    public partial class MouseControlForm : Form
 	{
 		private readonly VncClient vncClient;
 		private bool working = true;
@@ -32,16 +31,16 @@ namespace CommandSender
 				ReceiveTimeout = 1000
 			};
 			ClientSize = new Size(width, height);
-			vncClient.SetNewDataArriveEventHandler(DataArrivedHandler);
+			vncClient.SetNewDataArriveEventHandler(DataArrivedHandlerAsync);
 
-			Task.Factory.StartNew(() =>
+			Task.Run(async () =>
 			{
 				while (working)
 				{
 					try
 					{
 						vncClient.Send(VncCommand.GetScreen);
-						Thread.Sleep(Constants.SCREEN_WAIT_TIME);
+						await Task.Delay(Constants.SCREEN_WAIT_TIME);
 					}
 					catch (SocketException)
 					{
@@ -51,40 +50,46 @@ namespace CommandSender
 			});
 		}
 
-		private void DataArrivedHandler(object sender, DataArrivedEventArgs e)
+		private async Task DataArrivedHandlerAsync(object sender, DataArrivedEventArgs e)
 		{
-			var newData = rawImageData == null || rawImageData.Length == 0;
-			var vncClient = (VncClient)sender;
-			rawImageData = newData ? e.Response : rawImageData.AppendArrays(e.Response);
-			var beginning = vncClient.Encoding.GetString(rawImageData.Take(21).ToArray());
-			if (beginning.StartsWith(VncCommand.ImageSize))
+			await Task.Run(() =>
 			{
-				var data = beginning.Split(VncCommand.Separator);
-				expectedImageSize = Convert.ToInt32(data[1]);
-				rawImageData = rawImageData.Skip(VncCommand.ImageSize.Length + 2 + data[1].Length).ToArray();
-			}
-
-			if (rawImageData.Length >= expectedImageSize && expectedImageSize > 0)
-			{
-				try
+				var newData = rawImageData == null || rawImageData.Length == 0;
+				var vncClient = (VncClient)sender;
+				rawImageData = newData ? e.Response : rawImageData.AppendArrays(e.Response);
+				var beginning = vncClient.Encoding.GetString(rawImageData.Take(21).ToArray());
+				if (beginning.StartsWith(VncCommand.ImageSize))
 				{
-					var imageBytes = rawImageData.Take(expectedImageSize).ToArray();
-					rawImageData = rawImageData.Skip(expectedImageSize).ToArray();
-					if (imageBytes[0] == 0xFF && imageBytes[1] == 0xD8) // It's a JPEG! Hurray! :)
+					var data = beginning.Split(VncCommand.Separator);
+					expectedImageSize = Convert.ToInt32(data[1]);
+					rawImageData = rawImageData.Skip(VncCommand.ImageSize.Length + 2 + data[1].Length).ToArray();
+				}
+
+				if (rawImageData.Length >= expectedImageSize && expectedImageSize > 0)
+				{
+					try
 					{
-						var image = ImageUtils.ByteArrayToImage(imageBytes);
-						BackgroundImage = image;
+						var imageBytes = rawImageData.Take(expectedImageSize).ToArray();
+						rawImageData = rawImageData.Skip(expectedImageSize).ToArray();
+						if (imageBytes[0] == 0xFF && imageBytes[1] == 0xD8) // It's a JPEG! Hurray! :)
+						{
+							var image = ImageUtils.ByteArrayToImage(imageBytes);
+                            Invoke((MethodInvoker)delegate
+                            {
+								BackgroundImage = image;
+                            });
+                        }
+						else
+						{
+							rawImageData = null;
+						}
 					}
-					else
+					catch
 					{
 						rawImageData = null;
 					}
 				}
-				catch
-				{
-					rawImageData = null;
-				}
-			}
+			});
 		}
 
 		private void MouseControlForm_MouseMove(object sender, MouseEventArgs e)

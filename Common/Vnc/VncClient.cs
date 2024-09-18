@@ -3,13 +3,12 @@ using Common.Network;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using static Common.Vnc.VncServer;
 
 namespace Common.Vnc
 {
-	public class VncClient : Socket
+    public class VncClient : Socket
 	{
 		public ushort ListenerPortOfServer { get; set; }
 		public event DataArrivedEventHandler DataArrived;
@@ -40,22 +39,32 @@ namespace Common.Vnc
 			}
 			else
 			{
-				DataArrived += new DataArrivedEventHandler(DataArrivedHandler);
-				Task.Factory.StartNew(() => { Receiver(); });
+				DataArrived += DataArrivedHandlerAsync;
+				Task.Run(Receiver);
 			}
 		}
 
-		public bool Send(string message)
-		{
-			return SendBytes(Encoding.GetBytes(message));
-		}
+        public bool Send(string message)
+        {
+            return SendBytes(Encoding.GetBytes(message));
+        }
 
-		public bool SendBytes(byte[] bytes)
-		{
-			return MessageSender.Send(this, bytes);
-		}
+        public Task<bool> SendAsync(string message)
+        {
+            return SendBytesAsync(Encoding.GetBytes(message));
+        }
 
-		protected virtual void OnDataArrived(DataArrivedEventArgs e)
+        public bool SendBytes(byte[] bytes)
+        {
+            return MessageSender.Send(this, bytes);
+        }
+
+        public Task<bool> SendBytesAsync(byte[] bytes)
+        {
+            return MessageSender.SendAsync(this, bytes);
+        }
+
+        protected virtual void OnDataArrived(DataArrivedEventArgs e)
 		{
 			DataArrived?.Invoke(this, e);
 		}
@@ -64,14 +73,14 @@ namespace Common.Vnc
 		{
 			if (dataArrivedEventHandler != null)
 			{
-				DataArrived -= DataArrivedHandler;
+				DataArrived -= DataArrivedHandlerAsync;
 				DataArrived += dataArrivedEventHandler;
 			}
 		}
 
-		public void DataArrivedHandler(object sender, DataArrivedEventArgs e)
+		public async Task DataArrivedHandlerAsync(object sender, DataArrivedEventArgs e)
 		{
-			var message = GetMessage(sender, e);
+			var message = await GetMessageAsync(sender, e);
 			switch (message)
 			{
 				case "Unknown command":
@@ -83,13 +92,16 @@ namespace Common.Vnc
 			}
 		}
 
-		public static string GetMessage(object sender, DataArrivedEventArgs e)
-		{
-			var vncClient = (VncClient)sender;
-			return vncClient.Encoding.GetString(e.Response);
-		}
+        public static Task<string> GetMessageAsync(object sender, DataArrivedEventArgs e)
+        {
+			return Task.Run(() =>
+			{
+				var vncClient = (VncClient)sender;
+				return vncClient.Encoding.GetString(e.Response);
+			});
+        }
 
-		private void Receiver()
+        private async Task Receiver()
 		{
 			try
 			{
@@ -97,7 +109,7 @@ namespace Common.Vnc
 				{
 					if (Available > 0)
 					{
-						Thread.Sleep(100);
+						await Task.Delay(100);
 						var readable = Available;
 
 						var receiveBuffer = new byte[readable];
@@ -108,7 +120,7 @@ namespace Common.Vnc
 							OnDataArrived(new DataArrivedEventArgs(this, (IPEndPoint)RemoteEndPoint, receiveBuffer));
 						}
 					}
-					Thread.Sleep(1);
+                    await Task.Delay(1);
 				}
 			}
 			catch (SocketException) { }

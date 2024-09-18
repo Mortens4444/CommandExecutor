@@ -94,7 +94,6 @@ namespace Common.Utils
 					cursor.Draw(graphics, new Rectangle(cursorPosition, new Size(cursor.Size.Width, cursor.Size.Height)));
 				}
 			}
-			Thread.Sleep(10);
 			return bmp.Clone(new Rectangle(0, 0, bmp.Width, bmp.Height), pixelFormat);
 		}
 

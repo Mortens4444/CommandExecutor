@@ -2,13 +2,14 @@
 using Common.Vnc;
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using static Common.WinAPI;
 
 namespace Common.Mouse
 {
 	public static class MouseHandler
 	{
-		public static void ProcessMessage(string clickControlMessage, int clickType)
+		public static async Task ProcessMessageAsync(string clickControlMessage, int clickType)
 		{
 			var clickButton = clickControlMessage.Split(' ')[1];
 			WinAPI.GetCursorPos(out POINT location);
@@ -19,7 +20,7 @@ namespace Common.Mouse
 				for (int i = 0; i < 3; i++) // Why 3?
 				{
 					WinAPI.MouseEvent(clickFlags, location.X, location.Y, 0, 0);
-					Thread.Sleep(50);
+					await Task.Delay(50);
 				}
 			}
 			else
@@ -29,7 +30,7 @@ namespace Common.Mouse
 			}
 		}
 
-		public static void ProcessMessage(string mouseControlMessage)
+		public static async Task ProcessMessageAsync(string mouseControlMessage)
 		{
 			var mouseEvents = mouseControlMessage.Split(new string[] { VncCommand.Mouse }, StringSplitOptions.RemoveEmptyEntries);
 
@@ -38,8 +39,8 @@ namespace Common.Mouse
 				var clickType = ClickButtonProvider.Get(mouseEvents[i]);
 				if (clickType != -1)
 				{
-					MouseHandler.ProcessMessage(mouseEvents[i], clickType);
-					Thread.Sleep(50);
+					await MouseHandler.ProcessMessageAsync(mouseEvents[i], clickType);
+                    await Task.Delay(50);
 				}
 				else
 				{
